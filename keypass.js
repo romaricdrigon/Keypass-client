@@ -87,18 +87,17 @@ function displayList(data) {
  */
 function addArray(items, title, id) {
 	// first, the title
-	$("#donnees").append("<h3>"+title+"</h3>");
-	
+	var _html = '<div id="section_'+id+'"><h3>'+title+'</h3>';
 	// create array
-	var _html = '<table width="100%"><thead><tr><th>Titre</th><th>Login</th><th>MdP</th><th>Commentaire</th></tr></thead><tbody id="section_'+id+'">';
+	_html += '<table width="100%"><thead><tr><th>Titre</th><th>Login</th><th>MdP</th><th>Commentaire</th></tr></thead><tbody id="array_'+id+'">';
 	for (row in items) {
 		_html += addRow(items[row]);
 	}
 	var _form = '<form name="add_'+id+'"><input type="text" name="title" size="30" /><input type="text" name="login" size="25" />';
 	_form += '<input type="text" name="password" size="25" /><input type="text" name="comment" size="70" /><input type="button" onClick="add('+id+')" value="+" /></form>';
-	_html += '</tbody></table>'+_form+'<hr />';
+	_html += '</tbody></table>'+_form+'<form><input type="button" onClick="removeSection('+id+')" value="Supprimer cete section" /></form><hr /></div>';
 	
-	$("#donnees").append(_html); // add it to DOM
+	$("#donnees").append(_html); // add it to DOM - in one time to prevent JQuery from correcting incomplete html tags
 }
 // add an element in the array
 function addRow(item) {
@@ -162,7 +161,7 @@ function add(id) {
 	});
 	
 	// we add the line in DOM
-	$("#section_"+id).append(addRow(_obj));
+	$("#array_"+id).append(addRow(_obj));
 	
 	// empty form
 	document.forms['add_'+id].elements['title'].value = '';
@@ -176,6 +175,11 @@ function add(id) {
  */
 function addSection() {
 	var _name = window.prompt('Veuillez rentrer le nom de la nouvelle section. Attention, le titre n\'est pas crypté.', '');
+	
+	if (_name == null)  {
+		// the user cancelled the dialog, we exit the function
+		return;
+	}
 	
 	if (_name != '') {
 		// we have (sadly) to backup name as a global
@@ -193,7 +197,7 @@ function addSection() {
 		error("Veuillez rentrer un titre !");
 	}
 }
-
+// called when preceding request successes
 function addSectionId(data) {
 	//check if data is numeric
  	if (!isNaN(parseFloat(data)) && isFinite(data)) {
@@ -203,6 +207,26 @@ function addSectionId(data) {
 		
 		addArray(myKey.data[_id]["content"], myKey.data[_id]["title"], _id); 		
  	}
+}
+
+/*
+ * Remove a section
+ */
+function removeSection(id) {
+	var _result = window.confirm("Êtes-vous sur de vouloir supprimer cette section ? Son contenu sera définitivement effacé.");
+	
+	if (_result === true) {
+		$.ajax({
+			type: 'POST',
+			url: "http://localhost:8888/Keypass/request/remove_section",
+			data: {id: id, user: myKey.user, key: myKey.key},
+			success: successMessage,
+			error: serverError
+		});		
+		
+		// delete DOM
+		$("#section_"+id).remove();
+	}
 }
 
 /*
@@ -217,5 +241,7 @@ function serverError() {
  */
 function successMessage() {
 	// display message
-	$('#message').html('Modification effectu&eacute;e !')
+	$('#message').html('<div id="success">Modification effectu&eacute;e !</div>');
+	
+	$("#success").fadeOut(15000, 'linear'); // message pendant 15 secondes
 }
