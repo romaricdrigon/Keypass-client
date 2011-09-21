@@ -36,6 +36,19 @@ body {
 	border: 2px dashed green;
 }
 
+.row_title, .row_login, .row_password {
+	width: 150px !important;
+}
+.row_comment {
+	width: 300px;
+}
+.donnees hr {
+	margin: 20px 0;
+}
+.donnees form {
+	padding: 5px 0;
+}
+
 /*
  * Footer
  */

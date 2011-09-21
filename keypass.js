@@ -48,6 +48,10 @@ function login(user, password) {
 	});
 }
 
+	/****************
+	 * MAIN DISPLAY *
+	****************/
+	
 function displayList(data) {
 	$("#login").hide();
 	$("#main").show();
@@ -79,23 +83,29 @@ function displayList(data) {
 		 */ 
 	}
 	
-	$("#main").append('<input type="button" onClick="addSection()" value="Ajouter une section" />'); // add it to DOM
+	$("#main").append('<input type="button" onClick="addSection()" value="Ajouter une section" />');
 }
 
 /*
  * "Intern" function, to create an array of items
  */
 function addArray(items, title, id) {
-	// first, the title
-	var _html = '<div id="section_'+id+'"><h3>'+title+'</h3>';
+	var _html = '<div id="section_'+id+'"><h3 id="h3_'+id+'"">'+title+'</h3>'; // first, the title
+	
 	// create array
-	_html += '<table width="100%"><thead><tr><th>Titre</th><th>Login</th><th>MdP</th><th>Commentaire</th></tr></thead><tbody id="array_'+id+'">';
+	_html += '<table width="100%"><thead><tr><th class="row_title">Titre</th><th class="row_login">Login</th>';
+	_html += '<th class="row_password">MdP</th><th class="row_comment">Commentaire</th></tr></thead><tbody id="array_'+id+'">';
+	
 	for (row in items) {
 		_html += addRow(items[row]);
 	}
-	var _form = '<form name="add_'+id+'"><input type="text" name="title" size="30" /><input type="text" name="login" size="25" />';
-	_form += '<input type="text" name="password" size="25" /><input type="text" name="comment" size="70" /><input type="button" onClick="add('+id+')" value="+" /></form>';
-	_html += '</tbody></table>'+_form+'<form><input type="button" onClick="removeSection('+id+')" value="Supprimer cete section" /></form><hr /></div>';
+	
+	var _form = '<form name="add_'+id+'"><input type="text" name="title" size="30" /><input type="text" name="login" size="30" />';
+	_form += '<input type="text" name="password" size="30" /><input type="text" name="comment" size="60" />';
+	_form += '<input type="button" onClick="add('+id+')" value="+" /></form>';
+	
+	// end the array
+	_html += '</tbody></table>'+_form+'<form><input type="button" onClick="renameSection('+id+')" value="Renomer" /><input type="button" onClick="removeSection('+id+')" value="Supprimer cette section" /></form><hr /></div>';
 	
 	$("#donnees").append(_html); // add it to DOM - in one time to prevent JQuery from correcting incomplete html tags
 }
@@ -104,7 +114,7 @@ function addRow(item) {
 	var _html = '<tr>';
 	
 	for (column in item) {
-		_html += "<td>"+item[column]+"</td>";
+		_html += '<td class="row_'+column+'">'+item[column]+"</td>";
 	}
 	
 	_html += "</tr>";
@@ -112,11 +122,17 @@ function addRow(item) {
 	return _html;
 }
 
+	/********
+	 * ITEM *
+	********/
+	
 /*
  * Add an element
  */
 function add(id) {
-	if (document.forms['add_'+id].elements['title'].value == '' || document.forms['add_'+id].elements['login'].value == '' || document.forms['add_'+id].elements['password'].value == '') {
+	if (document.forms['add_'+id].elements['title'].value == '' 
+	|| document.forms['add_'+id].elements['login'].value == '' 
+	|| document.forms['add_'+id].elements['password'].value == '') {
 		error("Les champs Titre, Login et MdP sont obligatoires");
 		return;
 	}
@@ -170,6 +186,10 @@ function add(id) {
 	document.forms['add_'+id].elements['comment'].value = '';
 }
 
+	/***********
+	 * SECTION *
+	***********/
+	
 /*
  * Add a section
  */
@@ -210,6 +230,34 @@ function addSectionId(data) {
 }
 
 /*
+ * To rename a section
+ */
+function renameSection(id) {
+	var _name = window.prompt('Veuillez rentrer le nouveau nom de la section. Attention, le titre n\'est pas crypté.', '');
+	
+	if (_name == null)  {
+		// the user cancelled the dialog, we exit the function
+		return;
+	}
+	
+	if (_name != '') {
+		// modify DOM
+		$("#h3_"+id).html(_name);
+		
+		// we don't know the id of the item, there maybe gaps in the database, we'll ask the server first
+		$.ajax({
+			type: 'POST',
+			url: "http://localhost:8888/Keypass/request/modify_section",
+			data: {title: stringToBase64(_name), id: id, user: myKey.user, key: myKey.key},
+			success: successMessage,
+			error: serverError
+		});		
+	} else {
+		error("Veuillez rentrer un titre !");
+	}
+}
+
+/*
  * Remove a section
  */
 function removeSection(id) {
@@ -229,6 +277,10 @@ function removeSection(id) {
 	}
 }
 
+	/********
+	 * MISC *
+	********/
+	
 /*
  * Error from the connection
  */
