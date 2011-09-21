@@ -1,0 +1,45 @@
+body {
+	background: #111;
+	font-family: Courier;
+}
+
+.alert {
+	color: red;
+	font-weight: bold;
+}
+
+/*
+ * Content
+ */
+.wrapper {
+	width: 900px;
+	padding: 30px;
+	background: #fefefe;
+	margin: 0 auto;
+}
+
+#main {
+	display: none;
+}
+#message {
+	width: 800px;
+	height: 40px;
+	line-height: 40px;
+	padding: 10px;
+}
+#success {
+	width: 780px;
+	height: 30px;
+	line-height: 30px;
+	padding: 10px 50px;
+	background: (0, 255, 0, 0.6);
+	border: 2px dashed green;
+}
+
+/*
+ * Footer
+ */
+.footer {
+	opacity: 0.8;
+	padding: 25px;
+}

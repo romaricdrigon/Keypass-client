@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>KeyPass</title>
+	<link type="text/css" href="style.css" rel="stylesheet" />
+	<script type="text/javascript" src="keypass.js"></script>
+	<script type="text/javascript" src="lib/mykey.js"></script>
+	<script type="text/javascript" src="lib/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript" src="lib/jquery-ui-1.8.16.custom.min.js"></script>
+	<script type="text/javascript" src="lib/2.4.0-crypto-sha1-hmac-pbkdf2-blockmodes-aes.js"></script>	
+</head>
+<body>
+	<div class="wrapper">
+	<div class="content">
+		<h2>KeyPass</h2>
+			
+		<noscript>
+			<span class="alert">Vous devez activer Javascript pour utiliser cette applicaton.</span>
+		</noscript>
+		<div id="login">
+			<p>Bonjour,<br />
+			Veuillez vous connecter.</p>
+			
+			<form name="log">
+				<input type="text" name="user" size="40" value="Utilisateur" onClick="this.value=''" />
+				<input type="password" name="password" size="40" value="Mot de passe" onClick="this.value=''" />
+				<input type="button" onClick="login(this.form.user.value, this.form.password.value)" value="Valider" />
+			</form>
+		</div> <!-- end login -->
+		<div id="main">
+			<div id="message"></div>
+			<div id="donnees"><!-- here lies dragons --></div>
+		</div> <!-- end main -->
+	</div> <!-- end content -->
+	<div class="footer">
+		Keypass - &copy; Club des 24 Heures de l'INSA 2011
+	</div>
+	</div> <!-- end wrapper -->
+</body>
+</html>
