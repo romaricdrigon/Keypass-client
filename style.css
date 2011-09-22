@@ -36,17 +36,33 @@ body {
 	border: 2px dashed green;
 }
 
-.row_title, .row_login, .row_password {
-	width: 150px !important;
-}
-.row_comment {
-	width: 300px;
-}
+/*
+ * Table
+ */
 .donnees hr {
 	margin: 20px 0;
 }
 .donnees form {
 	padding: 5px 0;
+}
+.row_title, .row_login, .row_password {
+	width: 150px;
+	overflow: scroll;
+}
+.row_comment {
+	width: 270px;
+	overflow: scroll;
+}
+.row_img {
+	width: 15px;
+	visibility: hidden; /* use visibility to "fill" the space */
+}
+/* display buttons when hovering the line */
+.row:hover {
+	background: rgba(50, 50, 50, 0.1);
+}
+.row:hover .row_img {
+	visibility: visible;
 }
 
 /*
