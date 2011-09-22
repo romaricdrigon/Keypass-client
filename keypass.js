@@ -19,6 +19,8 @@ function KeyPass(user, password) {
 	this.key = hmac(this.password, this.token);
 	
 	this.data = []; // global that'll contain all data
+	
+	this.id = 0; // we'll use this to number items
 }
 
 /*
@@ -62,6 +64,12 @@ function displayList(data) {
 		// decrypt blop & convert from JSON
 		var _json = decrypt(data[section]["blop"], myKey.password);
 		var _content = (_json=='')?[]:JSON.parse(_json); // do not decode empty JSON!
+		for (item in _content) {
+			// we attribute ids to items
+			_content[item]["id"] = myKey.id;
+			myKey.id++;
+		}
+		
 		var _title = base64ToString(data[section]["title"]); // decode from base64
 		var _id = data[section]["id"];
 		myKey.data.push({content: _content, title: _title, id: _id});
@@ -78,6 +86,7 @@ function displayList(data) {
 		 *			user
 		 *			password
 		 *			comment
+		 * 			{id} (maybe be missing, will be overwritten anyway)
 		 *		}
 		 *	]
 		 */ 
@@ -93,31 +102,36 @@ function addArray(items, title, id) {
 	var _html = '<div id="section_'+id+'"><h3 id="h3_'+id+'"">'+title+'</h3>'; // first, the title
 	
 	// create array
-	_html += '<table width="100%"><thead><tr><th class="row_title">Titre</th><th class="row_login">Login</th>';
-	_html += '<th class="row_password">MdP</th><th class="row_comment">Commentaire</th></tr></thead><tbody id="array_'+id+'">';
+	_html += '<table width="100%" cellspacing="0"><thead><tr><th class="row_title">Titre</th><th class="row_login">Login</th>';
+	_html += '<th class="row_password">MdP</th><th class="row_comment">Commentaire</th><th class="row_img"></th></tr></thead><tbody id="array_'+id+'">';
+	// we add some empty <th></th> because of the modify & delete buttons
 	
 	for (row in items) {
-		_html += addRow(items[row]);
+		_html += addRow(id, items[row]);
 	}
 	
 	var _form = '<form name="add_'+id+'"><input type="text" name="title" size="30" /><input type="text" name="login" size="30" />';
 	_form += '<input type="text" name="password" size="30" /><input type="text" name="comment" size="60" />';
-	_form += '<input type="button" onClick="add('+id+')" value="+" /></form>';
+	_form += '<input type="button" onClick="addItem('+id+')" value="+" /></form>';
 	
-	// end the array
-	_html += '</tbody></table>'+_form+'<form><input type="button" onClick="renameSection('+id+')" value="Renomer" /><input type="button" onClick="removeSection('+id+')" value="Supprimer cette section" /></form><hr /></div>';
+	// end the array, with buttons for the section
+	_html += '</tbody></table>'+_form+'<form><input type="button" onClick="renameSection('+id+')" value="Renomer" />';
+	_html += '<input type="button" onClick="removeSection('+id+')" value="Supprimer cette section" /></form><hr /></div>';
 	
 	$("#donnees").append(_html); // add it to DOM - in one time to prevent JQuery from correcting incomplete html tags
 }
 // add an element in the array
-function addRow(item) {
-	var _html = '<tr>';
+function addRow(section, item) {
+	var _html = '<tr class="row" id="row_'+item["id"]+'">';
 	
 	for (column in item) {
-		_html += '<td class="row_'+column+'">'+item[column]+"</td>";
+		if (column != "id") {
+			_html += '<td class="row_'+column+'">'+item[column]+"</td>";
+		}
 	}
 	
-	_html += "</tr>";
+	// we add the buttons and close the line
+	_html += '<td class="row_img"><img class="del_img" src="img/delete.png" at="Supprimer" onClick="removeItem('+item["id"]+')" /></td></tr>';
 	
 	return _html;
 }
@@ -129,7 +143,7 @@ function addRow(item) {
 /*
  * Add an element
  */
-function add(id) {
+function addItem(id) {
 	if (document.forms['add_'+id].elements['title'].value == '' 
 	|| document.forms['add_'+id].elements['login'].value == '' 
 	|| document.forms['add_'+id].elements['password'].value == '') {
@@ -157,7 +171,8 @@ function add(id) {
 						title: document.forms['add_'+id].elements['title'].value,
 						user: document.forms['add_'+id].elements['login'].value,
 						password: document.forms['add_'+id].elements['password'].value,
-						comment: document.forms['add_'+id].elements['comment'].value
+						comment: document.forms['add_'+id].elements['comment'].value,
+						id: myKey.id++
 					};
 		myKey.data[_index]["content"].push(_obj);
 	}
@@ -177,13 +192,53 @@ function add(id) {
 	});
 	
 	// we add the line in DOM
-	$("#array_"+id).append(addRow(_obj));
+	$("#array_"+id).append(addRow(_index, _obj), myKey.data[_index]["content"].length); // don't forget to pass the position of the line
 	
 	// empty form
 	document.forms['add_'+id].elements['title'].value = '';
 	document.forms['add_'+id].elements['login'].value = '';
 	document.forms['add_'+id].elements['password'].value = '';
 	document.forms['add_'+id].elements['comment'].value = '';
+}
+
+/*
+ * Delete an element of the array
+ */
+function removeItem(id) {
+	// we search for the id
+	var _index = -1;
+	var _section = -1;
+	for (section in myKey.data) {
+		for (item in myKey.data[section]["content"]) {
+			if (myKey.data[section]["content"][item]["id"] == id) {
+				_section = section;
+				_index = item;
+				break;
+			}
+		}
+	}
+		
+	var _result = window.confirm("Êtes-vous sur de vouloir supprimer '"+myKey.data[_section]["content"][_index]["title"]+"' ? Cette opération est irréversible.");
+	
+	if (_result === true && _index != -1 && _section != -1) {	
+		// we delete the line in the array
+		myKey.data[_section]["content"].splice(_index,1);
+					
+		// we serialize and then encrypt data (the whole section)
+		var _content = JSON.stringify(myKey.data[_section]["content"]);
+		var _data = encrypt(_content, myKey.password);
+	
+		$.ajax({
+			type: 'POST',
+			url: "http://localhost:8888/Keypass/request/change_data",
+			data: {content: _data, id: _section, user: myKey.user, key: myKey.key},
+			success: successMessage,
+			error: serverError
+		});	
+		
+		// delete DOM
+		$("#row_"+_index).remove();
+	}
 }
 
 	/***********
@@ -295,5 +350,5 @@ function successMessage() {
 	// display message
 	$('#message').html('<div id="success">Modification effectu&eacute;e !</div>');
 	
-	$("#success").fadeOut(15000, 'linear'); // message pendant 15 secondes
+	$("#success").fadeOut(10000, 'linear'); // message pendant 10 secondes
 }
