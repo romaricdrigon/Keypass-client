@@ -154,7 +154,7 @@ function addItem(id) {
 	var _index = -1;
 	
 	// we have to search the right object, and feed it
-	// I don't find a better way than a loop, sorry
+	// I didn't find a better way than a loop, sorry
 	for (item in myKey.data) {
 		if (myKey.data[item]["id"] == id) {
 			_index = item;
@@ -192,7 +192,7 @@ function addItem(id) {
 	});
 	
 	// we add the line in DOM
-	$("#array_"+id).append(addRow(_index, _obj), myKey.data[_index]["content"].length); // don't forget to pass the position of the line
+	$("#array_"+id).append(addRow(_index, _obj));
 	
 	// empty form
 	document.forms['add_'+id].elements['title'].value = '';
@@ -220,10 +220,10 @@ function removeItem(id) {
 		
 	var _result = window.confirm("Êtes-vous sur de vouloir supprimer '"+myKey.data[_section]["content"][_index]["title"]+"' ? Cette opération est irréversible.");
 	
-	if (_result === true && _index != -1 && _section != -1) {	
+	if (_result === true && _index != -1 && _section != -1) {
 		// we delete the line in the array
 		myKey.data[_section]["content"].splice(_index,1);
-					
+							
 		// we serialize and then encrypt data (the whole section)
 		var _content = JSON.stringify(myKey.data[_section]["content"]);
 		var _data = encrypt(_content, myKey.password);
@@ -231,13 +231,13 @@ function removeItem(id) {
 		$.ajax({
 			type: 'POST',
 			url: "http://localhost:8888/Keypass/request/change_data",
-			data: {content: _data, id: _section, user: myKey.user, key: myKey.key},
+			data: {content: _data, id: myKey.data[_section]["id"], user: myKey.user, key: myKey.key},
 			success: successMessage,
 			error: serverError
 		});	
 		
 		// delete DOM
-		$("#row_"+_index).remove();
+		$("#row_"+id).remove();
 	}
 }
 
