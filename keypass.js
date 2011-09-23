@@ -5,6 +5,40 @@
  * Using Crypto Js, http://code.google.com/p/crypto-js/
  */
 
+/*
+ * Prep for auto disconnect
+		// auto disconnect
+		idleTime = 0;
+		$(document).ready(function () {
+		    //Increment the idle time counter every minute.
+		    var idleInterval = setInterval("timerIncrement()", 60000); // 1 minute
+		
+		    //Zero the idle timer on mouse movement.
+		    $(this).mousemove(function (e) {
+		        idleTime = 0;
+		    });
+		    $(this).keypress(function (e) {
+		        idleTime = 0;
+		    });
+		})
+ */
+// auto disconnect
+idleTime = 0;
+myKey = null;
+
+$(document).ready(function () {
+    //Increment the idle time counter every minute.
+    var idleInterval = setInterval("timerIncrement()", 60000); // 1 minute
+
+    //Zero the idle timer on mouse movement.
+    $(this).mousemove(function (e) {
+        idleTime = 0;
+    });
+    $(this).keypress(function (e) {
+        idleTime = 0;
+    });
+})
+		
 // small class, to store & persist data
 function KeyPass(user, password) {
 	this.salt = 'hjK3uGD8P9a2hLKBJSQM';
@@ -102,11 +136,13 @@ function displayList(data) {
  * Logout : overwrite data in memory, return to login
  */
 function logout() {
-	myKey = null; // yes, it's THAT easy
-	
-	$("#donnees").empty(); // don't forget to empyt DOM !
-	$("#main").hide();
-	$("#login").show();
-	
-	success('D&eacute;connexion...');
+	if (myKey !== null) {
+		myKey = null; // yes, it's THAT easy
+		
+		$("#donnees").empty(); // don't forget to empyt DOM !
+		$("#main").hide();
+		$("#login").show();
+		
+		success('D&eacute;connexion...');
+	}
 }

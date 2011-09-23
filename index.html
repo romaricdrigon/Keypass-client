@@ -4,13 +4,18 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>KeyPass</title>
 	<link type="text/css" href="style.css" rel="stylesheet" />
-	<script type="text/javascript" src="keypass.js"></script>
+	<!-- load extern librairies first -->
+	<script type="text/javascript" src="lib/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript" src="lib/2.4.0-crypto-sha1-hmac-pbkdf2-blockmodes-aes.js"></script>
+	<!-- then my ressources -->
 	<script type="text/javascript" src="res/section.js"></script>
 	<script type="text/javascript" src="res/item.js"></script>
 	<script type="text/javascript" src="res/misc.js"></script>
 	<script type="text/javascript" src="lib/mycrypto.js"></script>
-	<script type="text/javascript" src="lib/jquery-1.6.4.min.js"></script>
-	<script type="text/javascript" src="lib/2.4.0-crypto-sha1-hmac-pbkdf2-blockmodes-aes.js"></script>	
+	<!-- finally, my main script -->
+	<script type="text/javascript" src="keypass.js"></script>
+	<script type="text/javascript">
+	</script>
 </head>
 <body>
 	<div class="wrapper">
@@ -27,7 +32,7 @@
 				
 				<form name="log">
 					<input type="text" name="user" size="40" value="Utilisateur" onClick="this.value=''" />
-					<input type="password" name="password" size="40" value="Mot de passe" onClick="this.value=''" />
+					<input type="password" name="password" size="40" value="Mot de passe" onClick="this.value=''" onKeyPress="submitEnter()" />
 					<input type="button" onClick="login(this.form.user.value, this.form.password.value)" value="Valider" />
 				</form>
 			</div> <!-- end login -->

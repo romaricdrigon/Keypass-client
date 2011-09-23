@@ -72,3 +72,31 @@ function success(message) {
 	
 	$("#success").fadeOut(10000, 'linear'); // message pendant 10 secondes
 }
+
+/*
+ * Submit login form when user press Enter
+ */
+function submitEnter() {
+     var _key;
+     
+     if (window.event) {
+          _key = window.event.keyCode; //IE
+     } else {
+          _key = e.which; // firefox
+     }
+     
+     if (_key == 13) {
+          login(document.forms['log'].elements['user'].value, document.forms['log'].elements['password'].value);
+     }
+}
+
+/*
+ * Disconnect user after 5 mn of inactivity
+ */
+function timerIncrement() {
+    idleTime++;
+    
+    if (idleTime >= 5) {
+       logout();
+    }
+}
