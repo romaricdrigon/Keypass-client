@@ -9,8 +9,8 @@ function addArray(items, title, id) {
 	_html += '<th class="row_password">MdP</th><th class="row_comment">Commentaire</th><th class="row_img"></th><th class="row_img"></th></tr></thead><tbody id="array_'+id+'">';
 	// we add 2 <th class="row_img"></th> because of the modify & delete buttons
 	
-	for (row in items) {
-		_html += addRow(id, items[row]);
+	for (var _row in items) {
+		_html += addRow(id, items[_row]);
 	}
 	
 	var _form = '<form name="add_'+id+'"><input type="text" name="title" size="30" /><input type="text" name="login" size="30" />';
@@ -27,9 +27,9 @@ function addArray(items, title, id) {
 function addRow(section, item) {
 	var _html = '<tr class="row" id="row_'+item["id"]+'">';
 	
-	for (column in item) {
-		if (column != "id") {
-			_html += '<td class="row_'+column+'">'+item[column]+"</td>";
+	for (var _column in item) {
+		if (_column != "id") {
+			_html += '<td class="row_'+_column+'">'+item[_column]+"</td>";
 		}
 	}
 	

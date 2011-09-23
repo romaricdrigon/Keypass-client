@@ -35,6 +35,8 @@ function addSectionId(data) {
 		
 		addArray(myKey.data[_id]["content"], myKey.data[_id]["title"], _id); 		
 		
+		name = null; // overwrite this global
+		
 		success(); // user feedback is good for you!
  	}
 }

@@ -76,9 +76,17 @@ body {
 }
 
 /*
+ * Logout
+ */
+.logout {
+	float: right;
+	font-weight: bold;
+}
+
+/*
  * Footer
  */
 .footer {
-	opacity: 0.8;
-	padding: 25px;
+	font-size: 0.9em;
+	padding: 15px 25px;
 }

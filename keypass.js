@@ -33,7 +33,7 @@ function login(user, password) {
 		return;
 	}
 	if (password.length == 0) {
-		error("Veuille renseigner le mot de passe!");
+		error("Veuillez renseigner le mot de passe!");
 		return;
 	}
 	
@@ -57,15 +57,19 @@ function displayList(data) {
 	$("#login").hide();
 	$("#main").show();
 	
+	// empty form
+	document.forms['log'].elements['user'].value = 'Utilisateur';
+	document.forms['log'].elements['password'].value = 'Mot de passe';
+	
 	success('Bienvenu '+myKey.user+' !');
 	
-	for (section in data) {
+	for (var _section in data) {
 		// decrypt blop & convert from JSON
-		var _json = decrypt(data[section]["blop"], myKey.password);
+		var _json = decrypt(data[_section]["blop"], myKey.password);
 		var _content = (_json=='')?[]:JSON.parse(_json); // do not decode empty JSON!
-		for (item in _content) {
+		for (var _item in _content) {
 			// we attribute ids to items
-			_content[item]["id"] = myKey.id;
+			_content[_item]["id"] = myKey.id;
 			myKey.id++;
 		}
 		
@@ -83,20 +87,26 @@ function displayList(data) {
 		 *	]
 		 */ 
 		
-		var _title = base64ToString(data[section]["title"]); // decode from base64
-		var _id = data[section]["id"];
+		var _title = base64ToString(data[_section]["title"]); // decode from base64
+		var _id = data[_section]["id"];
 		myKey.data.push({content: _content, title: _title, id: _id});
 		
 		// create (html) array
 		addArray(_content, _title, _id);
 	}
 	
-	$("#main").append('<input type="button" onClick="addSection()" value="Ajouter une section" />');
+	$("#donnees").append('<input type="button" onClick="addSection()" value="Ajouter une section" />');
 }
 
 /*
- * Logout : overwrite data in memory, dump DOM
+ * Logout : overwrite data in memory, return to login
  */
 function logout() {
+	myKey = null; // yes, it's THAT easy
 	
+	$("#donnees").empty(); // don't forget to empyt DOM !
+	$("#main").hide();
+	$("#login").show();
+	
+	success('D&eacute;connexion...');
 }

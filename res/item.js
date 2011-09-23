@@ -14,9 +14,9 @@ function addItem(id) {
 	
 	// we have to search the right object, and feed it
 	// I didn't find a better way than a loop, sorry
-	for (item in myKey.data) {
-		if (myKey.data[item]["id"] == id) {
-			_index = item;
+	for (var _item in myKey.data) {
+		if (myKey.data[_item]["id"] == id) {
+			_index = _item;
 			break;
 		}
 	}
@@ -67,11 +67,11 @@ function editItem(id) {
 	// we search for the id
 	var _index = -1;
 	var _section = -1;
-	for (section in myKey.data) {
-		for (item in myKey.data[section]["content"]) {
-			if (myKey.data[section]["content"][item]["id"] == id) {
-				_section = section;
-				_index = item;
+	for (_sec in myKey.data) {
+		for (_item in myKey.data[_sec]["content"]) {
+			if (myKey.data[_sec]["content"][_item]["id"] == id) {
+				_section = _sec;
+				_index = _item;
 				break;
 			}
 		}
@@ -99,9 +99,9 @@ function modifyItem(section, id) {
 	
 	// we have to search the right object, and feed it
 	// I didn't find a better way than a loop, sorry
-	for (item in myKey.data[section]["content"]) {
-		if (myKey.data[section]["content"][item]["id"] == id) {
-			_index = item;
+	for (var _item in myKey.data[section]["content"]) {
+		if (myKey.data[section]["content"][_item]["id"] == id) {
+			_index = _item;
 			break;
 		}
 	}
@@ -145,11 +145,11 @@ function removeItem(id) {
 	// we search for the id
 	var _index = -1;
 	var _section = -1;
-	for (section in myKey.data) {
-		for (item in myKey.data[section]["content"]) {
-			if (myKey.data[section]["content"][item]["id"] == id) {
-				_section = section;
-				_index = item;
+	for (var _sec in myKey.data) {
+		for (var _item in myKey.data[_sec]["content"]) {
+			if (myKey.data[_sec]["content"][_item]["id"] == id) {
+				_section = _sec;
+				_index = _item;
 				break;
 			}
 		}
