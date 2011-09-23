@@ -9,19 +9,11 @@ body {
 }
 
 /*
- * Content
+ * Message, displayed top of window, transparent bg
  */
-.wrapper {
-	width: 900px;
-	padding: 30px;
-	background: #fefefe;
-	margin: 0 auto;
-}
-
-#main {
-	display: none;
-}
 #message {
+	position: fixed;
+	top: 10px;
 	width: 800px;
 	height: 40px;
 	line-height: 40px;
@@ -34,6 +26,20 @@ body {
 	padding: 10px 50px;
 	background: rgba(0, 200, 0, 0.5);
 	border: 2px dashed green;
+}
+
+/*
+ * Content
+ */
+.wrapper {
+	width: 900px;
+	padding: 0 30px;
+	background: #fefefe;
+	margin: 0 auto;
+}
+
+#main {
+	display: none;
 }
 
 /*

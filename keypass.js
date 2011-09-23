@@ -57,7 +57,7 @@ function displayList(data) {
 	$("#login").hide();
 	$("#main").show();
 	
-	$('#message').html('Bienvenu '+myKey.user+' !');
+	success('Bienvenu '+myKey.user+' !');
 	
 	for (section in data) {
 		// decrypt blop & convert from JSON
@@ -92,4 +92,11 @@ function displayList(data) {
 	}
 	
 	$("#main").append('<input type="button" onClick="addSection()" value="Ajouter une section" />');
+}
+
+/*
+ * Logout : overwrite data in memory, dump DOM
+ */
+function logout() {
+	
 }

@@ -46,7 +46,7 @@ function addItem(id) {
 		type: 'POST',
 		url: "http://localhost:8888/Keypass/request/change_data",
 		data: {content: _data, id: id, user: myKey.user, key: myKey.key},
-		success: successMessage,
+		success: success,
 		error: serverError
 	});
 	
@@ -130,7 +130,7 @@ function modifyItem(section, id) {
 		type: 'POST',
 		url: "http://localhost:8888/Keypass/request/change_data",
 		data: {content: _data, id: myKey.data[section]["id"], user: myKey.user, key: myKey.key},
-		success: successMessage,
+		success: success,
 		error: serverError
 	});
 	
@@ -169,7 +169,7 @@ function removeItem(id) {
 			type: 'POST',
 			url: "http://localhost:8888/Keypass/request/change_data",
 			data: {content: _data, id: myKey.data[_section]["id"], user: myKey.user, key: myKey.key},
-			success: successMessage,
+			success: success,
 			error: serverError
 		});	
 		

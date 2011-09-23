@@ -34,6 +34,8 @@ function addSectionId(data) {
 		myKey.data[_id] = {content: [], title: name, id: _id};
 		
 		addArray(myKey.data[_id]["content"], myKey.data[_id]["title"], _id); 		
+		
+		success(); // user feedback is good for you!
  	}
 }
 
@@ -57,7 +59,7 @@ function renameSection(id) {
 			type: 'POST',
 			url: "http://localhost:8888/Keypass/request/modify_section",
 			data: {title: stringToBase64(_name), id: id, user: myKey.user, key: myKey.key},
-			success: successMessage,
+			success: success,
 			error: serverError
 		});		
 	} else {
@@ -76,7 +78,7 @@ function removeSection(id) {
 			type: 'POST',
 			url: "http://localhost:8888/Keypass/request/remove_section",
 			data: {id: id, user: myKey.user, key: myKey.key},
-			success: successMessage,
+			success: success,
 			error: serverError
 		});		
 		

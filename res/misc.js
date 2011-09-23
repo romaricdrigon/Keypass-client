@@ -42,17 +42,33 @@ function addRow(section, item) {
 
 /*
  * Error from the connection
+ * OR, the server may have responded with a "die" function, wo we display the message
  */
-function serverError() {
-	error("Échec de l'opération : le serveur ne répond pas");
+function serverError(data) {
+	if (data.responseText) {
+		switch (data.responseText) {
+			case 'Invalid credentials':
+				error("Nom d'utilisateur et/ou mot de passe invalide");
+				break;
+			default:
+				error("Erreur du serveur : " + data.responseText);
+				break;
+		}
+	} else {
+		error("Échec de l'opération : le serveur ne répond pas");
+	}
 }
 
 /*
  * Display 
  */
-function successMessage() {
-	// display message
-	$('#message').html('<div id="success">Modification effectu&eacute;e !</div>');
+function success(message) {
+	// if we provide a message, display it - else a generic one
+	if (message) {
+		$('#message').html('<div id="success">'+message+'</div>');
+	} else {
+		$('#message').html('<div id="success">Modification effectu&eacute;e !</div>');
+	}
 	
 	$("#success").fadeOut(10000, 'linear'); // message pendant 10 secondes
 }

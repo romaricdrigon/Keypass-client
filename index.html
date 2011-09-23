@@ -14,30 +14,30 @@
 </head>
 <body>
 	<div class="wrapper">
-	<div class="content">
-		<h2>KeyPass</h2>
-			
-		<noscript>
-			<span class="alert">Vous devez activer Javascript pour utiliser cette applicaton.</span>
-		</noscript>
-		<div id="login">
-			<p>Bonjour,<br />
-			Veuillez vous connecter.</p>
-			
-			<form name="log">
-				<input type="text" name="user" size="40" value="Utilisateur" onClick="this.value=''" />
-				<input type="password" name="password" size="40" value="Mot de passe" onClick="this.value=''" />
-				<input type="button" onClick="login(this.form.user.value, this.form.password.value)" value="Valider" />
-			</form>
-		</div> <!-- end login -->
-		<div id="main">
+		<div class="content">
+			<h2>KeyPass</h2>
+				
+			<noscript>
+				<span class="alert">Vous devez activer Javascript pour utiliser cette applicaton.</span>
+			</noscript>
 			<div id="message"></div>
-			<div id="donnees" class="donnees"><!-- here lies dragons --></div>
-		</div> <!-- end main -->
-	</div> <!-- end content -->
-	<div class="footer">
-		Keypass - &copy; Club des 24 Heures de l'INSA 2011
-	</div>
+			<div id="login">
+				<p>Bonjour,<br />
+				Veuillez vous connecter.</p>
+				
+				<form name="log">
+					<input type="text" name="user" size="40" value="Utilisateur" onClick="this.value=''" />
+					<input type="password" name="password" size="40" value="Mot de passe" onClick="this.value=''" />
+					<input type="button" onClick="login(this.form.user.value, this.form.password.value)" value="Valider" />
+				</form>
+			</div> <!-- end login -->
+			<div id="main">
+				<div id="donnees" class="donnees"><!-- here lies dragons --></div>
+			</div> <!-- end main -->
+		</div> <!-- end content -->
+		<div class="footer">
+			Keypass - &copy; Club des 24 Heures de l'INSA 2011
+		</div>
 	</div> <!-- end wrapper -->
 </body>
 </html>
