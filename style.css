@@ -57,6 +57,10 @@ body {
 	width: 15px;
 	visibility: hidden; /* use visibility to "fill" the space */
 }
+.row_form {
+	background: rgba(50, 50, 50, 0.2);
+	width: 910px;
+}
 /* display buttons when hovering the line */
 .row:hover {
 	background: rgba(50, 50, 50, 0.1);
