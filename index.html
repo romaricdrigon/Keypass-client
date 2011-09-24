@@ -32,8 +32,8 @@
 				
 				<form name="log">
 					<input type="text" name="user" size="40" value="Utilisateur" onClick="this.value=''" />
-					<input type="password" name="password" size="40" value="Mot de passe" onClick="this.value=''" onKeyPress="submitEnter()" />
-					<input type="button" onClick="login(this.form.user.value, this.form.password.value)" value="Valider" />
+					<input type="password" name="password" size="40" value="Mot de passe" onClick="this.value=''" onKeyPress="submitEnter('document.forms[\'log\'].connect.click()')" />
+					<input type="button" name="connect" onClick="login(this.form.user.value, this.form.password.value)" value="Valider" />
 				</form>
 			</div> <!-- end login -->
 			<div id="main">

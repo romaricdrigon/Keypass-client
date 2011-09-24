@@ -38,6 +38,18 @@ $(document).ready(function () {
         idleTime = 0;
     });
 })
+
+// will click on the button when user press enter key
+// sadly does not work whe nadding forms on the fly
+/*$(function() {
+    $('input').keydown(function(e){
+        if (e.keyCode == 13 || e.keyCode == 3) { // 13 is return, 3 enter in mac keypad
+        	// find the button, click it
+        	$(this).parent('form').find(':button').click();
+            return false; // the return false prevent IE from emetting a warning beep
+        }
+    });
+});*/
 		
 // small class, to store & persist data
 function KeyPass(user, password) {

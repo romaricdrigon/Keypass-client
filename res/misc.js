@@ -14,7 +14,7 @@ function addArray(items, title, id) {
 	}
 	
 	var _form = '<form name="add_'+id+'"><input type="text" name="title" size="30" /><input type="text" name="login" size="30" />';
-	_form += '<input type="text" name="password" size="30" /><input type="text" name="comment" size="60" />';
+	_form += '<input type="text" name="password" size="30" onKeyPress="submitEnter(\'addItem('+id+')\')" /><input type="text" name="comment" size="60" onKeyPress="submitEnter(\'addItem('+id+')\')" />';
 	_form += '<input type="button" onClick="addItem('+id+')" value="+" /></form>';
 	
 	// end the array, with buttons for the section
@@ -74,20 +74,21 @@ function success(message) {
 }
 
 /*
- * Submit login form when user press Enter
+ * Submit form (click on teh first button) when user press Enter
  */
-function submitEnter() {
-     var _key;
+function submitEnter(callback) {
+	var _key;
      
-     if (window.event) {
-          _key = window.event.keyCode; //IE
-     } else {
-          _key = e.which; // firefox
-     }
+	if (window.event) {
+		_key = window.event.keyCode; //IE
+	} else {
+		_key = e.which; // firefox
+	}
      
-     if (_key == 13) {
-          login(document.forms['log'].elements['user'].value, document.forms['log'].elements['password'].value);
-     }
+	if (_key == 13 || _key == 3) { // 13 is return, 3 enter in mac keypad
+		eval(callback); // just run the provided callback
+		return false; // the return false prevent IE from emetting a warning beep
+	}
 }
 
 /*
