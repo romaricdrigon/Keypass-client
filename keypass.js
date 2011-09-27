@@ -2,7 +2,7 @@
  * KeyPass application code
  * First version by Romaric Drigon, September 2011
  * 
- * Using Crypto Js, http://code.google.com/p/crypto-js/
+ * Using Crypto Js, 
  */
 
 /*
