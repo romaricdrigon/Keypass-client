@@ -28,7 +28,7 @@ Then you have to set up server url in keypass.js
 You will (anyway, should) want to personnalize salt and token in keypass.js, keep them pretty random and hairy.
 
 The hard part, is to choose the user and the password.
-Once choosen, you have to generate the hmac, by taping 'hmac(~password~, myKey.token)' in Javascript console (Google Chrome or Firebug make this pretty easy, you must be on the app).
+Once choosen, you have to generate the hmac, by taping 'hmac(doPbkdf2(YOUR_PASWORD, myKey.salt), myKey.token)' in Javascript console (Google Chrome or Firebug make this pretty easy, you must be on the app).
 Then, you have to set this in the database of the server app : add a line with user and the generated key (not the clear password) to key_user. You can use PhpMyAdmin for this.
 
 
