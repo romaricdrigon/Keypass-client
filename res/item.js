@@ -44,7 +44,7 @@ function addItem(id) {
 	// we resend our key each time, to validate it's not anyone doing bullshit
 	$.ajax({
 		type: 'POST',
-		url: "http://localhost:8888/Keypass/request/change_data",
+		url: serverUrl+"request/change_data",
 		data: {content: _data, id: id, user: myKey.user, key: myKey.key},
 		success: success,
 		error: serverError
@@ -128,7 +128,7 @@ function modifyItem(section, id) {
 	// we resend our key each time, to validate it's not anyone doing bullshit
 	$.ajax({
 		type: 'POST',
-		url: "http://localhost:8888/Keypass/request/change_data",
+		url: serverUrl+"request/change_data",
 		data: {content: _data, id: myKey.data[section]["id"], user: myKey.user, key: myKey.key},
 		success: success,
 		error: serverError
@@ -167,7 +167,7 @@ function removeItem(id) {
 	
 		$.ajax({
 			type: 'POST',
-			url: "http://localhost:8888/Keypass/request/change_data",
+			url: serverUrl+"request/change_data",
 			data: {content: _data, id: myKey.data[_section]["id"], user: myKey.user, key: myKey.key},
 			success: success,
 			error: serverError

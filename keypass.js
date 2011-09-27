@@ -6,52 +6,37 @@
  */
 
 /*
- * Prep for auto disconnect
-		// auto disconnect
-		idleTime = 0;
-		$(document).ready(function () {
-		    //Increment the idle time counter every minute.
-		    var idleInterval = setInterval("timerIncrement()", 60000); // 1 minute
-		
-		    //Zero the idle timer on mouse movement.
-		    $(this).mousemove(function (e) {
-		        idleTime = 0;
-		    });
-		    $(this).keypress(function (e) {
-		        idleTime = 0;
-		    });
-		})
+ * Globals
  */
-// auto disconnect
-idleTime = 0;
-myKey = null;
+	myKey = null;
+	serverUrl = "http://localhost:8888/Keypass/";
 
-$(document).ready(function () {
-    //Increment the idle time counter every minute.
-    var idleInterval = setInterval("timerIncrement()", 60000); // 1 minute
+/*
+ * "Script" code, run immediately at the launch
+ */
 
-    //Zero the idle timer on mouse movement.
-    $(this).mousemove(function (e) {
-        idleTime = 0;
-    });
-    $(this).keypress(function (e) {
-        idleTime = 0;
-    });
-})
+/*
+ * Auto-disconnect after some idle time
+ */
+	idleTime = 0;
+	$(document).ready(function () {
+	    //Increment the idle time counter every minute.
+	    var idleInterval = setInterval("timerIncrement()", 60000); // 1 minute
+	
+	    //Zero the idle timer on mouse movement.
+	    $(this).mousemove(function (e) {
+	        idleTime = 0;
+	    });
+	    $(this).keypress(function (e) {
+	        idleTime = 0;
+	    });
+	})
 
-// will click on the button when user press enter key
-// sadly does not work whe nadding forms on the fly
-/*$(function() {
-    $('input').keydown(function(e){
-        if (e.keyCode == 13 || e.keyCode == 3) { // 13 is return, 3 enter in mac keypad
-        	// find the button, click it
-        	$(this).parent('form').find(':button').click();
-            return false; // the return false prevent IE from emetting a warning beep
-        }
-    });
-});*/
+/* --- end of script code --- */
 		
-// small class, to store & persist data
+/*
+ * Small class, to store & persist data
+ */ 
 function KeyPass(user, password) {
 	this.salt = 'hjK3uGD8P9a2hLKBJSQM';
 	
@@ -88,7 +73,7 @@ function login(user, password) {
 	// we send the request to server-app
 	$.ajax({
 		type: 'POST',
-		url: "http://localhost:8888/Keypass/request/gets",
+		url: serverUrl+"request/gets",
 		data: {user: myKey.user, key: myKey.key},
 		success: displayList,
 		dataType: 'json',

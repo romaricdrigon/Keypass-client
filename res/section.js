@@ -16,7 +16,7 @@ function addSection() {
 		// we don't know the id of the item, there maybe gaps in the database, we'll ask the server first
 		$.ajax({
 			type: 'POST',
-			url: "http://localhost:8888/Keypass/request/add_section",
+			url: serverUrl+"request/add_section",
 			data: {title: stringToBase64(_name), user: myKey.user, key: myKey.key},
 			success: addSectionId,
 			error: serverError
@@ -59,7 +59,7 @@ function renameSection(id) {
 		// we don't know the id of the item, there maybe gaps in the database, we'll ask the server first
 		$.ajax({
 			type: 'POST',
-			url: "http://localhost:8888/Keypass/request/modify_section",
+			url: serverUrl+"request/modify_section",
 			data: {title: stringToBase64(_name), id: id, user: myKey.user, key: myKey.key},
 			success: success,
 			error: serverError
@@ -78,7 +78,7 @@ function removeSection(id) {
 	if (_result === true) {
 		$.ajax({
 			type: 'POST',
-			url: "http://localhost:8888/Keypass/request/remove_section",
+			url: serverUrl+"request/remove_section",
 			data: {id: id, user: myKey.user, key: myKey.key},
 			success: success,
 			error: serverError
