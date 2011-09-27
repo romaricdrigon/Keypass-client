@@ -2,7 +2,7 @@
  * Add a section
  */
 function addSection() {
-	var _name = window.prompt('Veuillez rentrer le nom de la nouvelle section. Attention, le titre n\'est pas crypté.', '');
+	var _name = window.prompt('Veuillez rentrer le nom de la nouvelle section', '');
 	
 	if (_name == null)  {
 		// the user cancelled the dialog, we exit the function
@@ -17,7 +17,7 @@ function addSection() {
 		$.ajax({
 			type: 'POST',
 			url: serverUrl+"request/add_section",
-			data: {title: stringToBase64(_name), user: myKey.user, key: myKey.key},
+			data: {title: encrypt(_name, myKey.password), user: myKey.user, key: myKey.key},
 			success: addSectionId,
 			error: serverError
 		});		
@@ -45,7 +45,7 @@ function addSectionId(data) {
  * To rename a section
  */
 function renameSection(id) {
-	var _name = window.prompt('Veuillez rentrer le nouveau nom de la section. Attention, le titre n\'est pas crypté.', '');
+	var _name = window.prompt('Veuillez rentrer le nouveau nom de la section', '');
 	
 	if (_name == null)  {
 		// the user cancelled the dialog, we exit the function
@@ -60,7 +60,7 @@ function renameSection(id) {
 		$.ajax({
 			type: 'POST',
 			url: serverUrl+"request/modify_section",
-			data: {title: stringToBase64(_name), id: id, user: myKey.user, key: myKey.key},
+			data: {title: encrypt(_name, myKey.password), id: id, user: myKey.user, key: myKey.key},
 			success: success,
 			error: serverError
 		});		

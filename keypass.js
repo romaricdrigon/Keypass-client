@@ -118,7 +118,7 @@ function displayList(data) {
 		 *	]
 		 */ 
 		
-		var _title = base64ToString(data[_section]["title"]); // decode from base64
+		var _title = decrypt(data[_section]["title"], myKey.password); // decode from base64
 		var _id = data[_section]["id"];
 		myKey.data.push({content: _content, title: _title, id: _id});
 		
