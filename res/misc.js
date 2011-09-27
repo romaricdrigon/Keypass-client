@@ -29,7 +29,10 @@ function addRow(section, item) {
 	
 	for (var _column in item) {
 		if (_column != "id") {
-			_html += '<td class="row_'+_column+'">'+item[_column]+"</td>";
+			// we detect link, make them clickables
+			var _str = item[_column].replace(/((ftp|https?):\/\/\S*)/g, '<a href="$1" target="_blank">$1</a>');
+			
+			_html += '<td class="row_'+_column+'">'+_str+"</td>";
 		}
 	}
 	
