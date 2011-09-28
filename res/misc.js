@@ -2,7 +2,7 @@
  * Create an array of items
  */
 function addArray(items, title, id) {
-	var _html = '<div id="section_'+id+'"><h3 id="h3_'+id+'"">'+title+'</h3>'; // first, the title
+	var _html = '<div id="section_'+id+'"><h3 id="h3_'+id+'"">'+htmlentities(title)+'</h3>'; // first, the title (espace html char)
 	
 	// create array
 	_html += '<table width="100%" cellspacing="0"><thead><tr><th class="row_title">Titre</th><th class="row_login">Login</th>';
@@ -29,8 +29,8 @@ function addRow(section, item) {
 	
 	for (var _column in item) {
 		if (_column != "id") {
-			// we detect link, make them clickables
-			var _str = item[_column].replace(/((ftp|https?):\/\/\S*)/g, '<a href="$1" target="_blank">$1</a>');
+			var _safe = htmlentities(item[_column]); // escape, prevent injecting Javascript code
+			var _str = _safe.replace(/((ftp|https?):\/\/\S*)/g, '<a href="$1" target="_blank">$1</a>'); // we detect link, make them clickables
 			
 			_html += '<td class="row_'+_column+'">'+_str+"</td>";
 		}
@@ -57,10 +57,11 @@ function changeCredentials() {
 	
 	if (doPbkdf2(_oldPass, myKey.salt) !== myKey.password) {
 		window.alert('Erreur : mot de passe invalide');
+		logout(); // out, bitch
 		return;
 	}
 	
-	var _user = window.prompt('Veuillez rentrer le nouveau nom d\'utilisateur', '');
+	var _user = window.prompt("Veuillez rentrer le nouveau nom d'utilisateur", '');
 	
 	if (_user == null)  {
 		return;
@@ -75,6 +76,14 @@ function changeCredentials() {
 		}
 		
 		if (_pass != '') {
+			// confirm password
+			var _pass2 = window.prompt('Veuillez confirmer le nouveau mot de passe', '');
+			
+			if (_pass2 != _pass) {
+				error("Les mots de passe ne correspondent pas");
+				return;
+			}
+			
 			// backup credentials in globals, for next function
 			newUser = _user;
 			newPass = doPbkdf2(_pass, myKey.salt);
@@ -177,7 +186,7 @@ function submitEnter(callback) {
 function timerIncrement() {
     idleTime++;
     
-    if (idleTime >= 5) {
+    if (idleTime >= 1) {
        logout();
     }
 }
