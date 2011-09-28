@@ -55,6 +55,9 @@ body {
 	width: 150px;
 	overflow: scroll;
 }
+.row .row_password {
+	color: #fff;
+}
 .row_comment {
 	width: 270px;
 	overflow: scroll;
@@ -73,6 +76,9 @@ body {
 }
 .row:hover .row_img {
 	visibility: visible;
+}
+.row:hover .row_password {
+	color: #000;
 }
 
 /*
