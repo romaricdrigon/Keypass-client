@@ -38,7 +38,7 @@ function addItem(id) {
 					
 	// we serialize and then encrypt data (the whole section)
 	var _content = JSON.stringify(myKey.data[_index]["content"]);
-	var _data = encrypt(_content, myKey.password);
+	var _data = myKey.encrypt(_content);
 	
 	// ask the server to do the same
 	// we resend our key each time, to validate it's not anyone doing bullshit
@@ -122,7 +122,7 @@ function modifyItem(section, id) {
 					
 	// we serialize and then encrypt data (the whole section)
 	var _content = JSON.stringify(myKey.data[section]["content"]);
-	var _data = encrypt(_content, myKey.password);
+	var _data = myKey.encrypt(_content);
 	
 	// ask the server to do the same
 	// we resend our key each time, to validate it's not anyone doing bullshit
@@ -163,7 +163,7 @@ function removeItem(id) {
 							
 		// we serialize and then encrypt data (the whole section)
 		var _content = JSON.stringify(myKey.data[_section]["content"]);
-		var _data = encrypt(_content, myKey.password);
+		var _data = myKey.encrypt(_content);
 	
 		$.ajax({
 			type: 'POST',

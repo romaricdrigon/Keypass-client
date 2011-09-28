@@ -55,7 +55,7 @@ function changeCredentials() {
 		return;
 	}
 	
-	if (doPbkdf2(_oldPass, myKey.salt) !== myKey.password) {
+	if (myKey.validatePassword(_oldPass) !== true) {
 		window.alert('Erreur : mot de passe invalide');
 		logout(); // out, bitch
 		return;
@@ -92,7 +92,7 @@ function changeCredentials() {
 			// we have to re-encrypt everything (all content & all sections)
 			var _content = {};
 			for (var _section in myKey.data) {
-				_content[_section] = {id: myKey.data[_section]["id"], title: encrypt(myKey.data[_section]["title"], newPass), content: encrypt(JSON.stringify(myKey.data[_section]["content"]), newPass)};
+				_content[_section] = {id: myKey.data[_section]["id"], title: myEncrypt(myKey.data[_section]["title"], newPass), content: myEncrypt(JSON.stringify(myKey.data[_section]["content"]), newPass)};
 			}
 			
 			// send it back
@@ -114,7 +114,7 @@ function changeCredentials() {
 function changeCredentialsMemory(data) {
 	if (data == 'success') {
 		// now we change data in memory
-		myKey.password = newPass;
+		myKey.setPassword(newPass);
 		myKey.user = newUser;
 		myKey.key = newKey;
 		

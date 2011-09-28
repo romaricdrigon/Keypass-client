@@ -17,7 +17,7 @@ function addSection() {
 		$.ajax({
 			type: 'POST',
 			url: serverUrl+"request/add_section",
-			data: {title: encrypt(_name, myKey.password), user: myKey.user, key: myKey.key},
+			data: {title: myKey.encrypt(_name), user: myKey.user, key: myKey.key},
 			success: addSectionId,
 			error: serverError
 		});		
@@ -60,7 +60,7 @@ function renameSection(id) {
 		$.ajax({
 			type: 'POST',
 			url: serverUrl+"request/modify_section",
-			data: {title: encrypt(_name, myKey.password), id: id, user: myKey.user, key: myKey.key},
+			data: {title: myKey.encrypt(_name), id: id, user: myKey.user, key: myKey.key},
 			success: success,
 			error: serverError
 		});		
