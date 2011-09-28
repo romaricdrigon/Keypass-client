@@ -44,6 +44,83 @@ function addRow(section, item) {
 }
 
 /*
+ * Change credentials :
+ * you can change both user and password
+ */
+function changeCredentials() {
+	// don't be too confident : check if it's the good user
+	var _oldPass = window.prompt('Veuillez rentrer votre ancien mot de passe', '');
+	
+	if (_oldPass == null)  {
+		return;
+	}
+	
+	if (doPbkdf2(_oldPass, myKey.salt) !== myKey.password) {
+		window.alert('Erreur : mot de passe invalide');
+		return;
+	}
+	
+	var _user = window.prompt('Veuillez rentrer le nouveau nom d\'utilisateur', '');
+	
+	if (_user == null)  {
+		return;
+	}
+	
+	if (_user != '') {
+		// now ask for new password
+		var _pass = window.prompt('Veuillez rentrer le nouveau mot de passe', '');
+		
+		if (_pass == null)  {
+			return;
+		}
+		
+		if (_pass != '') {
+			// backup credentials in globals, for next function
+			newUser = _user;
+			newPass = doPbkdf2(_pass, myKey.salt);
+			newKey = hmac(newPass, myKey.token);
+			
+			// we have to re-encrypt everything (all content & all sections)
+			var _content = {};
+			for (var _section in myKey.data) {
+				_content[_section] = {id: myKey.data[_section]["id"], title: encrypt(myKey.data[_section]["title"], newPass), content: encrypt(JSON.stringify(myKey.data[_section]["content"]), newPass)};
+			}
+			
+			// send it back
+			$.ajax({
+				type: 'POST',
+				url: serverUrl+"request/credentials_changed",
+				data: {user: myKey.user, key: myKey.key, newUser: newUser, newKey: newKey, newContent: JSON.stringify(_content)},
+				success : changeCredentialsMemory,
+				error: serverError
+			});	
+		} else {
+			error("Veuillez rentrer un mot de passe !");
+		}
+	} else {
+		error("Veuillez rentrer un nom d\'utilisateur !");
+	}	
+}
+// we change credentials in memory only is the server was able to change its database
+function changeCredentialsMemory(data) {
+	if (data == 'success') {
+		// now we change data in memory
+		myKey.password = newPass;
+		myKey.user = newUser;
+		myKey.key = newKey;
+		
+		success();
+	} else {
+		error("Le serveur a rencontré une erreur, aucune modification n'a été effectuée");		
+	}
+	
+	// delete globals
+	delete newPass;
+	delete newUser;
+	delete newKey;
+}
+
+/*
  * Error from the connection
  * OR, the server may have responded with a "die" function, wo we display the message
  */
@@ -77,7 +154,7 @@ function success(message) {
 }
 
 /*
- * Submit form (click on teh first button) when user press Enter
+ * Submit form (click on the first button) when user press Enter
  */
 function submitEnter(callback) {
 	var _key;

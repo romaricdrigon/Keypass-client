@@ -118,7 +118,7 @@ function displayList(data) {
 		 *	]
 		 */ 
 		
-		var _title = decrypt(data[_section]["title"], myKey.password); // decode from base64
+		var _title = decrypt(data[_section]["title"], myKey.password);
 		var _id = data[_section]["id"];
 		myKey.data.push({content: _content, title: _title, id: _id});
 		
@@ -126,7 +126,7 @@ function displayList(data) {
 		addArray(_content, _title, _id);
 	}
 	
-	$("#donnees").append('<input type="button" onClick="addSection()" value="Ajouter une section" />');
+	$("#donnees").prepend('<input type="button" onClick="addSection()" value="Ajouter une section" /> | <input type="button" onClick="changeCredentials()" value="Changer les informations de connexion" />');
 }
 
 /*

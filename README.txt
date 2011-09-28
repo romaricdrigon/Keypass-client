@@ -11,6 +11,7 @@ Its features are :
  - interface & message are in French, but it's so minimalistic it should be no great deal
  - datas are encrypted client-side (so no matter if connection, or database, or anything else are compromised) with AES
  - auto-disconnect after 5 minutes idle time
+ - user/password can be changed pretty easily
 
 
 ****** Is there any components I should know about? ******
@@ -25,12 +26,13 @@ I've used many tiers-librairies:
 It's independent from server app, you can put in anywhere, on a CDN...
 Then you have to set up server url in keypass.js
 
-You will (anyway, should) want to personnalize salt and token in keypass.js, keep them pretty random and hairy.
+DO NOT personnalize salt and token now!
 
-The hard part, is to choose the user and the password.
-Once choosen, you have to generate the hmac, by taping 'hmac(doPbkdf2(YOUR_PASWORD, myKey.salt), myKey.token)' in Javascript console (Google Chrome or Firebug make this pretty easy, you must be on the app).
-Then, you have to set this in the database of the server app : add a line with user and the generated key (not the clear password) to key_user. You can use PhpMyAdmin for this.
+You can login in the app by default with admin/admin.
 
+Then you'll see a link "Changer les informations de connexion" at the very bottom of the page. You'll have to re-enter the old password (admin), and then this allow you to change user and password.
+
+Now you can (and should!) change salt and token in keypass.js, keep them pretty random and hairy.
 
 ****** License ******
 
