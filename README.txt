@@ -12,6 +12,7 @@ Its features are :
  - datas are encrypted client-side (so no matter if connection, or database, or anything else are compromised) with AES
  - auto-disconnect after 5 minutes idle time
  - user/password can be changed pretty easily
+ - support multi-users
 
 
 ****** Is there any components I should know about? ******
