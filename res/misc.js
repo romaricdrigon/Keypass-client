@@ -137,6 +137,7 @@ function serverError(data) {
 	if (data.responseText) {
 		switch (data.responseText) {
 			case 'Invalid credentials':
+				document.forms['log'].elements['password'].value = ''; // empty password form
 				error("Nom d'utilisateur et/ou mot de passe invalide");
 				break;
 			default:
