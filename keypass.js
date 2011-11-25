@@ -12,29 +12,6 @@
 	serverUrl = "http://localhost:8888/Keypass/";
 
 /*
- * "Script" code, run immediately at the launch
- */
-
-/*
- * Auto-disconnect after some idle time
- */
-	idleTime = 0;
-	$(document).ready(function () {
-	    //Increment the idle time counter every minute.
-	    var idleInterval = setInterval("timerIncrement()", 60000); // 1 minute
-	
-	    //Zero the idle timer on mouse movement.
-	    $(this).mousemove(function (e) {
-	        idleTime = 0;
-	    });
-	    $(this).keypress(function (e) {
-	        idleTime = 0;
-	    });
-	})
-
-/* --- end of script code --- */
-		
-/*
  * Small class, to store & persist data
  */ 
 function KeyPass(user, password) {
@@ -101,6 +78,9 @@ function displayList(data) {
 	// empty form
 	document.forms['log'].elements['user'].value = 'Utilisateur';
 	document.forms['log'].elements['password'].value = 'Mot de passe';
+	
+	// set timer
+	setTimer();
 	
 	success('Bienvenu '+myKey.user+' !');
 	

@@ -182,12 +182,30 @@ function submitEnter(callback) {
 }
 
 /*
+ * Set up the timer
+ */
+function setTimer() {
+	idleTime = 0;
+	
+	// increment the idle time counter each minute - watch out milliseconds!
+	var idleInterval = setInterval("timerIncrement()", 60000);
+	
+	// zero the idle timer on mouse movement.
+	$(document).mousemove(function (e) {
+	    idleTime = 0;
+	});
+	$(document).keypress(function (e) {
+	    idleTime = 0;
+	});
+}
+	    
+/*
  * Disconnect user after 5 mn of inactivity
  */
 function timerIncrement() {
     idleTime++;
     
-    if (idleTime >= 1) {
+    if (idleTime >= 2) { // 2 minutes
        logout();
     }
 }
