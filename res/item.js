@@ -77,11 +77,12 @@ function editItem(id) {
 		}
 	}
 	
-	var _form = '<form name="edit_'+id+'" id="row_'+id+'" class="row_form"><input type="text" name="title" size="30" value="'+htmlentities(myKey.data[_section]["content"][_index]["title"])+'" />';
-	_form += '<input type="text" name="login" size="30" value="'+htmlentities(myKey.data[_section]["content"][_index]["user"])+'" />';
-	_form += '<input type="text" name="password" size="30" value="'+htmlentities(myKey.data[_section]["content"][_index]["password"])+'" onKeyPress="submitEnter(\'modifyItem('+_section+','+id+')\')" />';
-	_form += '<input type="text" name="comment" size="60"value="'+htmlentities(myKey.data[_section]["content"][_index]["comment"])+'" onKeyPress="submitEnter(\'modifyItem('+_section+','+id+')\')" />';
-	_form += '<input type="button" onClick="modifyItem('+_section+','+id+')" value="OK" /></form>';
+	var _form = '<tr id="row_'+id+'" class="row_form"><form name="edit_'+id+'">';
+	_form += '<td class="form_title"><input type="text" name="title" size="30" value="'+htmlentities(myKey.data[_section]["content"][_index]["title"])+'" /></td>';
+	_form += '<td class="form_login"><input type="text" name="login" size="30" value="'+htmlentities(myKey.data[_section]["content"][_index]["user"])+'" /></td>';
+	_form += '<td class="form_password"><input type="text" name="password" size="30" value="'+htmlentities(myKey.data[_section]["content"][_index]["password"])+'" onKeyPress="submitEnter(\'modifyItem('+_section+','+id+')\')" /></td>';
+	_form += '<td class="form_comment"><input type="text" name="comment" size="60"value="'+htmlentities(myKey.data[_section]["content"][_index]["comment"])+'" onKeyPress="submitEnter(\'modifyItem('+_section+','+id+')\')" /></td>';
+	_form += '<td class="form_button"><input type="button" onClick="modifyItem('+_section+','+id+')" value="OK" /></td></form></tr>';
 	
 	$("#row_"+id).replaceWith(_form); // we remplace the line by the form
 }

@@ -6,19 +6,22 @@ function addArray(items, title, id) {
 	
 	// create array
 	_html += '<table width="100%" cellspacing="0"><thead><tr><th class="row_title">Titre</th><th class="row_login">Login</th>';
-	_html += '<th class="row_password">MdP</th><th class="row_comment">Commentaire</th><th class="row_img"></th><th class="row_img"></th></tr></thead><tbody id="array_'+id+'">';
+	_html += '<th class="row_password">MdP</th><th class="row_comment">Commentaire</th><th class="row_img"></th>';
+	_html += '<th class="row_img"></th></tr></thead><tbody id="array_'+id+'">';
 	// we add 2 <th class="row_img"></th> because of the modify & delete buttons
 	
 	for (var _row in items) {
 		_html += addRow(id, items[_row]);
 	}
 	
-	var _form = '<form name="add_'+id+'"><input type="text" name="title" size="30" /><input type="text" name="login" size="30" />';
-	_form += '<input type="text" name="password" size="30" onKeyPress="submitEnter(\'addItem('+id+')\')" /><input type="text" name="comment" size="60" onKeyPress="submitEnter(\'addItem('+id+')\')" />';
-	_form += '<input type="button" onClick="addItem('+id+')" value="+" /></form>';
+	var _form = '<tr><form name="add_'+id+'"><td class="form_title"><input type="text" name="title" /></td>';
+	_form += '<td class="form_login"><input type="text" name="login" /></td>';
+	_form += '<td class="form_password"><input type="text" name="password" onKeyPress="submitEnter(\'addItem('+id+')\')" /></td>';
+	_form += '<td class="form_comment"><input type="text" name="comment" onKeyPress="submitEnter(\'addItem('+id+')\')" /></td>';
+	_form += '<td class="form_button"><input type="button" onClick="addItem('+id+')" value="+" /></td></form></tr>';
 	
 	// end the array, with buttons for the section
-	_html += '</tbody></table>'+_form+'<form><input type="button" onClick="renameSection('+id+')" value="Renomer" />';
+	_html += _form+'</tbody></table><form><input type="button" onClick="renameSection('+id+')" value="Renommer" />';
 	_html += '<input type="button" onClick="removeSection('+id+')" value="Supprimer cette section" /></form><hr /></div>';
 	
 	$("#donnees").append(_html); // add it to DOM - in one time to prevent JQuery from correcting incomplete html tags

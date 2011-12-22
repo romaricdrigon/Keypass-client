@@ -18,6 +18,7 @@ body {
 	height: 40px;
 	line-height: 40px;
 	padding: 10px;
+	margin: 0 auto;
 }
 #success {
 	width: 780px;
@@ -32,7 +33,7 @@ body {
  * Content
  */
 .wrapper {
-	width: 900px;
+	width: 90%;
 	padding: 0 30px;
 	background: #fefefe;
 	margin: 0 auto;
@@ -48,27 +49,26 @@ body {
 .donnees hr {
 	margin: 20px 0;
 }
-.donnees form {
-	padding: 5px 0;
-}
+
+/* only for data rows */
 .row_title, .row_login, .row_password {
-	width: 150px;
-	overflow: scroll;
-}
-.row .row_password {
-	color: #fff;
+	width: 20%;
+	overflow: auto;
 }
 .row_comment {
-	width: 270px;
-	overflow: scroll;
+	width: 40%;
+	overflow: auto;
+	/* thanks CSS3! these 3 ruels allow to break all elements, including links */
+	word-wrap: break-word;
+	word-break: break-all;
+	overflow-wrap: break-word; 
 }
 .row_img {
-	width: 15px;
+	width: 20px !important;
 	visibility: hidden; /* use visibility to "fill" the space */
 }
 .row_form {
-	background: rgba(50, 50, 50, 0.2);
-	width: 910px;
+	background: rgba(50, 50, 50, 0.1);
 }
 /* display buttons when hovering the line */
 .row:hover {
@@ -77,8 +77,16 @@ body {
 .row:hover .row_img {
 	visibility: visible;
 }
-.row:hover .row_password {
-	color: #000;
+
+/* for forms row */
+.form_title, .form_login, .form_password {
+	width: 20%;
+}
+.form_title input, .form_login input, .form_password input, .form_comment input {
+	width: 95%;
+}
+.form_comment {
+	width: 40%;
 }
 
 /*
