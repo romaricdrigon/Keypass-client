@@ -23,7 +23,7 @@ function KeyPass(user, password) {
 		
 	// immediatly strengten password, and store this version in a private (local) var
 	var _password = doPbkdf2(password, this.salt);
-	//this.password = _password;
+
 	this.user = user;
 	this.key = hmac(_password, this.token);
 	
@@ -31,8 +31,8 @@ function KeyPass(user, password) {
 	this.id = 0; // we'll use this to number items
 	
 	// functions - we can't access password directly
-	this.encrypt = function(plain) {return myEncrypt(plain,_password)};
-	this.decrypt = function(cipher) {return myDecrypt(cipher,_password)};
+	this.encrypt = function(plain) {return myEncrypt(plain, _password)};
+	this.decrypt = function(cipher) {return myDecrypt(cipher, _password)};
 	this.validatePassword = function(str) {
 		if (doPbkdf2(str, this.salt) == _password) {
 			return true;
