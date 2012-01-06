@@ -25,7 +25,7 @@ I've used many tiers-librairies:
 ****** Set up ******
 
 It's independent from server app, you can put in anywhere, on a CDN...
-Then you have to set up server url in keypass.js
+Then you have to set up server url in res/keypass.js
 
 DO NOT personnalize salt and token now!
 
@@ -33,7 +33,7 @@ You can login in the app by default with admin/admin.
 
 Then you'll see a link "Changer les informations de connexion" at the very bottom of the page. You'll have to re-enter the old password (admin), and then this allow you to change user and password.
 
-Now you can (and should!) change salt and token in keypass.js, keep them pretty random and hairy.
+Now you can (and should!) change salt and token in res/keypass.js, keep them pretty random and hairy.
 
 
 ****** Backup ******
