@@ -9,7 +9,7 @@
  */
 	myKey = null;
 	/* ---------------------- first step, set actual serevr URL ---------------------- */
-	serverUrl = "http://localhost:8888/Keypass/";
+	serverUrl = "http://localhost:8888/Keypass/"; // don't forget end slash
 
 /*
  * Small class, to store & persist data
