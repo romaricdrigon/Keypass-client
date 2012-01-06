@@ -13,7 +13,7 @@ function backupDatabase() {
 		type: 'POST',
 		url: serverUrl+"request/backup",
 		data: {user: myKey.user, key: myKey.key, doDownload: false},
-		success: function(data) {success('Sauvegarde effectuée'+data);},
+		success: function(data) {success('Sauvegarde effectuée');},
 		error: serverError
 	});	
 }
