@@ -10,6 +10,7 @@
 	<!-- then my ressources -->
 	<script type="text/javascript" src="res/section.js"></script>
 	<script type="text/javascript" src="res/item.js"></script>
+	<script type="text/javascript" src="res/backup.js"></script>
 	<script type="text/javascript" src="res/misc.js"></script>
 	<script type="text/javascript" src="lib/mycrypto.js"></script>
 	<!-- finally, my main script -->
@@ -36,7 +37,11 @@
 			</div> <!-- end login -->
 			<div id="main">
 				<div id="donnees" class="donnees"><!-- here lies dragons --></div>
-				<div class="logout"><a href="#" onClick="logout()">D&eacute;connexion</a></div>
+				<div class="logout">
+					<input type="button" onClick="backupDatabase()" value="Sauvegarder la base de données" /> | 
+					<input type="button" onClick="downloadDatabase()" value="Télécharger la base de données" /> |
+					<a href="#" onClick="logout()">D&eacute;connexion</a>
+				</div>
 			</div> <!-- end main -->
 		</div> <!-- end content -->
 		<div class="footer">

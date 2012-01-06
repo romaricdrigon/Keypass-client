@@ -35,6 +35,12 @@ Then you'll see a link "Changer les informations de connexion" at the very botto
 
 Now you can (and should!) change salt and token in keypass.js, keep them pretty random and hairy.
 
+
+****** Backup ******
+
+First of all, it's important that can store anywhere else the custom salt and token you set. Without the salt, you won't be able to decrypt data, and without the token, to connect to server.
+Then, when an user is logged, he'll see several links at the bottom of the page. It allows him to download a database backup, or just make one. Any case, a (whole) database dump is made and stored on the server in /backup/ dir.
+
 ****** License ******
 
 Feel free to use, re-use it. I make no warranties about my code.
