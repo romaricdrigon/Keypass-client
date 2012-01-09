@@ -38,8 +38,14 @@ Now you can (and should!) change salt and token in res/keypass.js, keep them pre
 
 ****** Backup ******
 
-First of all, it's important that can store anywhere else the custom salt and token you set. Without the salt, you won't be able to decrypt data, and without the token, to connect to server.
-Then, when an user is logged, he'll see several links at the bottom of the page. It allows him to download a database backup, or just make one. Any case, a (whole) database dump is made and stored on the server in /backup/ dir.
+First of all, it's important that you store anywhere else the custom salt and token you set. Without the salt, you won't be able to decrypt data, and without the token, to connect to server.
+Then, when an user is logged, he'll see a link at the bottom of the page. It allows him to make a (whole) database dump, which is stored on the server in /backup/ dir.
+
+It's possible to get a downloadable database backup, send a POST request to /request/backup with params:
+	user: a valid user name (I prefer to create a dedicated one)
+	key : his key (= hmac token, stored in myKey.key)
+	doDownload: true
+
 
 ****** License ******
 
